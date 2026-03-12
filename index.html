@@ -507,171 +507,308 @@
       box-shadow: 6px 6px 0 var(--dark);
     }
 
-    /* ====================== EXPLODING COLLAGE GALLERY ====================== */
-    .gallery-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 900;
-      background: rgba(13, 13, 26, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-      overflow: hidden;
-    }
-
-    .gallery-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .gallery-close {
-      position: absolute;
-      top: 24px;
-      right: 30px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 3px solid var(--white);
+    /* ====================== SERVICES MARQUEE & INFO ====================== */
+    .section-marquee {
       background: var(--hot-pink);
-      color: var(--white);
-      font-size: 1.5rem;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-      z-index: 100;
-      box-shadow: 4px 4px 0 var(--dark);
+      border-top: var(--border-w) solid var(--dark);
+      border-bottom: var(--border-w) solid var(--dark);
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 8px 0 var(--dark), 0 -8px 0 var(--dark);
     }
 
-    .gallery-close:hover {
-      transform: scale(1.1);
+    .marquee-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 25s linear infinite;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2rem;
+      text-transform: uppercase;
+      color: var(--dark);
+      letter-spacing: 2px;
+    }
+
+    .marquee-content span {
+      margin: 0 40px;
+    }
+
+    .marquee-content span.star {
+      color: var(--white);
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .section-whatido {
+      background: var(--white);
+      padding: 80px 40px;
+      color: var(--dark);
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .whatido-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .whatido-inner h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 24px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 var(--cyan-light);
+    }
+
+    .whatido-inner p {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .skills-stickers {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .skill-sticker {
+      background: var(--cyan-light);
+      border: var(--border-w) solid var(--dark);
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      box-shadow: 4px 4px 0 var(--dark);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .skill-sticker:nth-child(even) {
+      background: var(--pink);
+    }
+
+    .skill-sticker:hover {
+      transform: translateY(-4px) rotate(2deg);
       box-shadow: 6px 6px 0 var(--dark);
     }
 
-    .collage-container {
-      position: absolute;
-      inset: 0;
+    @media (max-width: 768px) {
+      .section-whatido {
+        padding: 60px 20px;
+      }
+
+      .whatido-inner p {
+        font-size: 1.1rem;
+      }
+
+      .marquee-content {
+        font-size: 1.5rem;
+      }
+
+      .skill-sticker {
+        font-size: 0.95rem;
+        padding: 8px 18px;
+      }
+    }
+
+    /* ====================== WORKS SECTION ====================== */
+    .section-works {
+      padding: 80px 40px;
+      background: var(--dark);
+      color: var(--white);
+      position: relative;
+    }
+
+    .section-works-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-works h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 3rem;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+      color: var(--cyan-light);
+    }
+
+    .works-filters {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 50px;
+    }
+
+    .filter-btn {
+      padding: 10px 24px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      background: var(--white);
+      color: var(--dark);
+      border: 3px solid var(--dark);
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--pink);
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .filter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 6px 0 var(--pink);
+    }
+
+    .filter-btn.active {
+      background: var(--hot-pink);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--cyan);
+      border-color: var(--white);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      min-height: 400px;
+    }
+
+    .work-card {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .work-card.hidden {
+      display: none;
+    }
+
+    .work-card-inner {
+      position: relative;
+      background: var(--white);
+      padding: 12px;
+      border: 3px solid var(--white);
+      border-radius: 12px;
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), box-shadow 0.3s cubic-bezier(.4, 0, .2, 1), border-color 0.3s;
+    }
+
+    .work-card-inner:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 12px 12px 0 var(--hot-pink);
+      border-color: var(--cyan);
+    }
+
+    .work-card-inner img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 2px solid var(--dark);
+      display: block;
+    }
+
+    .work-overlay {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      background: rgba(26, 26, 26, 0.9);
+      padding: 16px;
+      border-radius: 0 0 6px 6px;
+      border: 2px solid var(--dark);
+      border-top: none;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .collage-item {
-      position: absolute;
-      width: clamp(250px, 30vw, 400px);
-      background: var(--white);
-      padding: 12px 12px 70px 12px;
-      border: 3px solid var(--dark);
-      border-radius: 6px;
-      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      transform: translate(0, 0) scale(0) rotate(0deg);
-      opacity: 0;
-      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease, filter 0.4s ease, box-shadow 0.3s;
-      z-index: 10;
+    .work-card-inner:hover .work-overlay {
+      transform: translateY(0);
+      opacity: 1;
     }
 
-    .collage-item::after {
-      content: attr(data-title);
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      width: 100%;
-      text-align: center;
+    .work-title {
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 1.2rem;
-      color: var(--dark);
+      color: var(--white);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
-    .collage-item::before {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.6);
-      border: 2px solid var(--dark);
-      border-radius: 2px;
-      z-index: 2;
-      box-shadow: 2px 2px 0 var(--dark);
-      transition: opacity 0.3s;
-    }
-
-    .collage-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 2px solid var(--dark);
-      pointer-events: none;
-    }
-
-    /* State: Exploded */
-    .gallery-overlay.open .collage-item.exploded {
-      opacity: 1;
-      transform: translate(var(--tx), var(--ty)) scale(1) rotate(var(--rot));
-    }
-
-    /* State: Hover when exploded (and not focused) */
-    .gallery-overlay.open .collage-item.exploded:not(.focused):hover {
-      z-index: 20;
-      box-shadow: 15px 15px 0 rgba(0, 0, 0, 0.7);
-      transform: translate(calc(var(--tx) - 5px), calc(var(--ty) - 5px)) scale(1.05) rotate(0deg);
-    }
-
-    /* State: Focused */
-    .gallery-overlay.open .collage-container.has-focus .collage-item:not(.focused) {
-      filter: blur(8px) brightness(0.5);
-      transform: translate(calc(var(--tx) * 1.2), calc(var(--ty) * 1.2)) scale(0.8) rotate(var(--rot));
-      pointer-events: none;
-    }
-
-    .gallery-overlay.open .collage-item.focused {
-      z-index: 50;
-      transform: translate(0, 0) scale(1.4) rotate(0deg) !important;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 100px var(--hot-pink);
-      cursor: zoom-out;
-    }
-
-    .gallery-overlay.open .collage-item.focused::before {
-      opacity: 0;
+    .work-cat {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--cyan-light);
+      margin-top: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
-      .collage-item {
-        width: 65vw;
-        padding-bottom: 50px;
+      .section-works {
+        padding: 50px 20px;
       }
 
-      .collage-item::after {
-        font-size: 1rem;
-        bottom: 12px;
+      .section-works h2 {
+        font-size: 2.2rem;
       }
 
-      .gallery-overlay.open .collage-item.focused {
-        transform: translate(0, 0) scale(1.1) rotate(0deg) !important;
+      .works-filters {
+        gap: 8px;
+        margin-bottom: 30px;
+      }
+
+      .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .work-card-inner img {
+        height: 280px;
       }
     }
 
     /* ====================== COMMISSIONS SECTION ====================== */
     .section-commissions {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.6s cubic-bezier(.4, 0, .2, 1), opacity 0.4s ease;
-      opacity: 0;
-    }
-
-    .section-commissions.open {
-      max-height: 2000px;
-      opacity: 1;
+      background: var(--cyan-light);
+      border-top: var(--border-w) solid var(--dark);
+      padding: 40px 0;
+      color: var(--dark);
+      position: relative;
     }
 
     .section-commissions-inner {
@@ -1098,101 +1235,146 @@
         height: 38px;
         font-size: 1rem;
       }
-
-      /* Gallery mobile adjustments */
-      .gallery-inner {
-        padding: 20px;
-      }
-
-      .gallery-slide {
-        flex-direction: column;
-        gap: 24px;
-      }
-
-      .slide-artwork {
-        max-width: 90%;
-      }
-
-      .slide-artwork img {
-        max-height: 40vh;
-      }
-
-      .slide-info {
-        max-width: 100%;
-        text-align: center;
-      }
-
-      .slide-info h3 {
-        font-size: 1.8rem;
-      }
-
-      .slide-info p {
-        font-size: 0.9rem;
-      }
-
-      .gallery-counter {
-        top: 16px;
-        left: 20px;
-      }
-
-      .gallery-counter .current-num {
-        font-size: 2.5rem;
-      }
-
-      .gallery-close {
-        top: 16px;
-        right: 16px;
-        width: 40px;
-        height: 40px;
-      }
-
-      .gallery-nav {
-        bottom: 24px;
-        right: 50%;
-        transform: translateX(50%);
-      }
-
-      .gallery-nav button {
-        width: 48px;
-        height: 48px;
-      }
     }
 
-    /* ====================== LIGHTBOX ====================== */
-    .lightbox-overlay {
+    /* ====================== ART SPOTLIGHT (NEW CACHE-BUSTED) ====================== */
+    .art-spotlight {
       position: fixed;
       inset: 0;
-      background: rgba(26, 26, 26, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 2000;
+      z-index: 10001;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
-      cursor: zoom-out;
-      padding: 40px;
+      transition: opacity 0.4s ease;
+      background: rgba(10, 10, 10, 0.1);
+      /* Ultra light */
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      overflow: hidden;
     }
 
-    .lightbox-overlay.open {
+    .art-spotlight.open {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .lightbox-overlay img {
-      max-width: 90%;
-      max-height: 90vh;
-      border: 4px solid var(--white);
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transform: scale(0.92);
-      transition: transform 0.35s cubic-bezier(.4, 0, .2, 1);
+    .spotlight-aura {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(25px) brightness(0.8);
+      z-index: 1;
+      opacity: 0.12;
+      /* Barely visible integration */
+      transition: opacity 0.5s ease;
     }
 
-    .lightbox-overlay.open img {
-      transform: scale(1);
+    .spotlight-view {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12vh 8vw;
+      /* Large frame air */
+      cursor: zoom-out;
+      box-sizing: border-box;
+    }
+
+    .spotlight-frame {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.85) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.17, 0.84, 0.44, 1);
+    }
+
+    .art-spotlight.open .spotlight-frame {
+      transform: scale(1) translateY(0);
+    }
+
+    .spotlight-artwork {
+      max-width: 80vw !important;
+      max-height: 70vh !important;
+      /* Slightly larger, better presence */
+      width: auto !important;
+      height: auto !important;
+      object-fit: contain !important;
+      border: 3.5px solid var(--white);
+      border-radius: 4px;
+      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(255, 107, 170, 0.15),
+        0 0 10px rgba(255, 255, 255, 0.2);
+      display: block;
+    }
+
+    .spotlight-item {
+      position: absolute;
+      font-size: 2rem;
+      color: var(--cyan);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .spot-top {
+      top: -20px;
+      right: -20px;
+      color: var(--hot-pink);
+    }
+
+    .spot-bottom {
+      bottom: -20px;
+      left: -20px;
+    }
+
+    .spotlight-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      background: var(--hot-pink);
+      border: 2px solid var(--dark);
+      border-radius: 50%;
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--dark);
+      transition: all 0.2s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spotlight-close:hover {
+      transform: scale(1.1) rotate(90deg);
+      background: var(--white);
+      color: var(--hot-pink);
+    }
+
+    @media (max-width: 768px) {
+      .spotlight-view {
+        padding: 40px 10px;
+      }
+
+      .spotlight-artwork {
+        max-width: 85vw !important;
+        max-height: 50vh !important;
+      }
+
+      .spotlight-item {
+        font-size: 1.5rem;
+      }
     }
 
     .sr-only {
@@ -1267,29 +1449,138 @@
     </div>
   </header>
 
-  <!-- ======================== EXPLODING COLLAGE GALLERY ======================== -->
-  <div class="gallery-overlay" id="gallery-overlay">
-    <button class="gallery-close" id="gallery-close">✕</button>
-    <div class="collage-container" id="collage-container">
+  <!-- ======================== SERVICES INFO (Welcome) ======================== -->
+  <section class="section-whatido">
+    <div class="whatido-inner">
+      <h2>✦ Welcome to my void</h2>
+      <p>I specialize in creating expressive anime-style characters, vibrant OC designs, and story-driven illustrations.
+        My work blends neo-pop aesthetics with a love for storytelling. Whether it's a cozy slice-of-life scene or an
+        epic dark-fantasy warrior, I pour emotion and detail into every piece.</p>
 
-      <div class="collage-item" data-title="Tatsumaki" style="--tx: -26vw; --ty: -16vh; --rot: -8deg;">
-        <img src="assets/gallery1.png" alt="Tatsumaki">
+      <div class="skills-stickers">
+        <span class="skill-sticker">Character Design</span>
+        <span class="skill-sticker">Digital Art</span>
+        <span class="skill-sticker">Anime Style</span>
+        <span class="skill-sticker">OC Design</span>
+        <span class="skill-sticker">Concept Art</span>
       </div>
+    </div>
+  </section>
 
-      <div class="collage-item" data-title="Neon Panther" style="--tx: 22vw; --ty: -22vh; --rot: 6deg;">
-        <img src="assets/gallery2.png" alt="Neon Panther">
-      </div>
-
-      <div class="collage-item" data-title="Autumn Views" style="--tx: -20vw; --ty: 20vh; --rot: 12deg;">
-        <img src="assets/gallery3.png" alt="Autumn Views">
-      </div>
-
-      <div class="collage-item" data-title="Rena Bunny" style="--tx: 26vw; --ty: 12vh; --rot: -5deg;">
-        <img src="assets/gallery4.png" alt="Rena Bunny">
-      </div>
-
+  <!-- ======================== MARQUEE TAPE ======================== -->
+  <div class="section-marquee">
+    <div class="marquee-content">
+      <span>CHARACTER DESIGN</span><span class="star">✦</span>
+      <span>ILLUSTRATION</span><span class="star">✦</span>
+      <span>PORTRAITS</span><span class="star">✦</span>
+      <span>OVERLAYS</span><span class="star">✦</span>
+      <span>EMOTES</span><span class="star">✦</span>
+      <span>BANNERS</span><span class="star">✦</span>
+      <!-- Duplicate for seamless looping -->
+      <span>CHARACTER DESIGN</span><span class="star">✦</span>
+      <span>ILLUSTRATION</span><span class="star">✦</span>
+      <span>PORTRAITS</span><span class="star">✦</span>
+      <span>OVERLAYS</span><span class="star">✦</span>
+      <span>EMOTES</span><span class="star">✦</span>
+      <span>BANNERS</span><span class="star">✦</span>
     </div>
   </div>
+
+  <!-- ======================== WORKS SECTION ======================== -->
+  <section class="section-works" id="section-works">
+    <div class="section-works-inner">
+      <h2>✦ Selected Works</h2>
+      <div class="works-filters" id="works-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="character">Character</button>
+        <button class="filter-btn" data-filter="portrait">Portrait</button>
+        <button class="filter-btn" data-filter="overlay">Overlays & Emotes</button>
+        <button class="filter-btn" data-filter="banner">Banners</button>
+      </div>
+
+      <div class="works-grid" id="works-grid">
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/gallery1.png" alt="Tatsumaki">
+            <div class="work-overlay">
+              <span class="work-title">Tatsumaki</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/gallery2.png" alt="Neon Panther">
+            <div class="work-overlay">
+              <span class="work-title">Neon Panther</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="portrait">
+          <div class="work-card-inner">
+            <img src="assets/gallery3.png" alt="Autumn Views">
+            <div class="work-overlay">
+              <span class="work-title">Autumn Views</span>
+              <span class="work-cat">Portrait</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/gallery4.png" alt="Rena Bunny">
+            <div class="work-overlay">
+              <span class="work-title">Rena Bunny</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/gallery5.png" alt="VGEN Challenge">
+            <div class="work-overlay">
+              <span class="work-title">VGEN Challenge</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="banner">
+          <div class="work-card-inner">
+            <img src="assets/BANNER1.png" alt="Stream Banner">
+            <div class="work-overlay">
+              <span class="work-title">Profile Banner</span>
+              <span class="work-cat">Banner</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/EMOTES1preview.png" data-full="assets/EMOTES1.png" alt="Twitch Emotes">
+            <div class="work-overlay">
+              <span class="work-title">Custom Emotes</span>
+              <span class="work-cat">Emotes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/OVERLAY1.png" alt="Stream Overlay">
+            <div class="work-overlay">
+              <span class="work-title">Stream Overlay</span>
+              <span class="work-cat">Overlay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ======================== COMMISSIONS FORM ======================== -->
   <section class="section-commissions" id="section-commissions">
@@ -1339,113 +1630,113 @@
     </div>
   </div>
 
-  <!-- ======================== LIGHTBOX ======================== -->
-  <div class="lightbox-overlay" id="lightbox"><img src="" alt="Full-size artwork" id="lightbox-img"></div>
+  <!-- ======================== ART SPOTLIGHT VIEWER ======================== -->
+  <div class="art-spotlight" id="art-spotlight">
+    <div class="spotlight-aura" id="spotlight-aura"></div>
+    <div class="spotlight-view">
+      <div class="spotlight-frame">
+        <img src="" alt="Full-size artwork" id="spotlight-artwork" class="spotlight-artwork">
+        <div class="spotlight-item spot-top">✦</div>
+        <div class="spotlight-item spot-bottom">✧</div>
+      </div>
+      <button class="spotlight-close" id="spotlight-close-btn">✕</button>
+    </div>
+  </div>
 
   <!-- ======================== JAVASCRIPT ======================== -->
   <script>
     // ---- Elements ----
     const btnWorks = document.getElementById('btn-works');
-    const galleryOverlay = document.getElementById('gallery-overlay');
-    const galleryClose = document.getElementById('gallery-close');
-    const galleryPrev = document.getElementById('gallery-prev');
-    const galleryNext = document.getElementById('gallery-next');
-    const galleryNum = document.getElementById('gallery-num');
-    const galleryProgress = document.getElementById('gallery-progress');
-    const slides = document.querySelectorAll('.gallery-slide');
-    const totalSlides = slides.length;
-    let currentSlide = 0;
+    const sectionWorks = document.getElementById('section-works');
 
     const btnCommissions = document.getElementById('btn-commissions');
     const sectionCommissions = document.getElementById('section-commissions');
     const btnSayHello = document.getElementById('btn-sayhello');
 
-    // ---- Gallery functions ----
-    const collageContainer = document.getElementById('collage-container');
-    const items = document.querySelectorAll('.collage-item');
+    // ---- Works Filtering & Scroll ----
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const workCards = document.querySelectorAll('.work-card');
 
-    function openGallery() {
-      galleryOverlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      // Trigger explosion animation with slight delays
-      items.forEach((item, index) => {
-        item.classList.remove('focused');
-        setTimeout(() => {
-          item.classList.add('exploded');
-        }, index * 100);
+    btnWorks.addEventListener('click', () => {
+      sectionWorks.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        workCards.forEach(card => {
+          if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+            card.classList.remove('hidden');
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            }, 10);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+              if (card.style.opacity === '0') {
+                card.classList.add('hidden');
+              }
+            }, 300);
+          }
+        });
       });
-      collageContainer.classList.remove('has-focus');
-    }
+    });
 
-    function closeGallery() {
-      galleryOverlay.classList.remove('open');
+    // ---- ART SPOTLIGHT (Gallery) ----
+    const artSpotlight = document.getElementById('art-spotlight');
+    const spotlightAura = document.getElementById('spotlight-aura');
+    const spotlightArtwork = document.getElementById('spotlight-artwork');
+    const spotlightCloseBtn = document.getElementById('spotlight-close-btn');
+
+    workCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        const fullSource = img.getAttribute('data-full') || img.src;
+
+        spotlightArtwork.src = fullSource;
+        spotlightAura.style.backgroundImage = `url(${fullSource})`;
+        artSpotlight.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeSpotlight() {
+      artSpotlight.classList.remove('open');
       document.body.style.overflow = '';
-      items.forEach(item => {
-        item.classList.remove('exploded', 'focused');
-      });
-      collageContainer.classList.remove('has-focus');
+      setTimeout(() => {
+        if (!artSpotlight.classList.contains('open')) {
+          spotlightArtwork.src = '';
+          spotlightAura.style.backgroundImage = 'none';
+        }
+      }, 500);
     }
 
-    btnWorks.addEventListener('click', openGallery);
-    galleryClose.addEventListener('click', closeGallery);
-
-    // Click on item to focus/unfocus
-    items.forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (item.classList.contains('focused')) {
-          // Unfocus
-          item.classList.remove('focused');
-          collageContainer.classList.remove('has-focus');
-        } else {
-          // Focus this one, blur others
-          items.forEach(i => i.classList.remove('focused'));
-          item.classList.add('focused');
-          collageContainer.classList.add('has-focus');
-        }
-      });
-    });
-
-    // Clicking container background unfocuses or closes
-    galleryOverlay.addEventListener('click', (e) => {
-      if (e.target === galleryOverlay || e.target === collageContainer) {
-        if (collageContainer.classList.contains('has-focus')) {
-          items.forEach(i => i.classList.remove('focused'));
-          collageContainer.classList.remove('has-focus');
-        } else {
-          closeGallery();
-        }
+    // Close on background click
+    artSpotlight.addEventListener('click', (e) => {
+      if (e.target === artSpotlight || e.target.classList.contains('spotlight-view')) {
+        closeSpotlight();
       }
     });
 
+    // Close on button click
+    spotlightCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeSpotlight();
+    });
+
+    // Close on Escape key
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && galleryOverlay.classList.contains('open')) {
-        if (collageContainer.classList.contains('has-focus')) {
-          items.forEach(i => i.classList.remove('focused'));
-          collageContainer.classList.remove('has-focus');
-        } else {
-          closeGallery();
-        }
+      if (e.key === 'Escape') {
+        closeSpotlight();
+        closeModal();
       }
     });
-
-    // ---- COMMISSIONS ----
-    const btnPhone = document.getElementById('btn-phone');
-
-    function scrollToCommissions() {
-      sectionCommissions.classList.add('open');
-      setTimeout(() => sectionCommissions.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-    }
-
-    btnCommissions.addEventListener('click', () => {
-      const isOpen = sectionCommissions.classList.toggle('open');
-      if (isOpen) {
-        setTimeout(() => sectionCommissions.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-      }
-    });
-
-    btnSayHello.addEventListener('click', scrollToCommissions);
-    btnPhone.addEventListener('click', scrollToCommissions);
 
     // ---- WHO AM I modal ----
     const btnWhoami = document.getElementById('btn-whoami');
@@ -1456,29 +1747,27 @@
       modalOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
     });
+
     function closeModal() {
-      modalOverlay.classList.remove('open');
-      document.body.style.overflow = '';
+      if (modalOverlay.classList.contains('open')) {
+        modalOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
     }
+
     modalClose.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-        if (lightbox.classList.contains('open')) {
-          lightbox.classList.remove('open');
-          document.body.style.overflow = galleryOverlay.classList.contains('open') ? 'hidden' : '';
-        }
-      }
-    });
 
-    // ---- LIGHTBOX ----
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = galleryOverlay.classList.contains('open') ? 'hidden' : '';
-    });
+    // ---- COMMISSIONS (Always Open) ----
+    const btnPhone = document.getElementById('btn-phone');
+
+    function scrollToCommissions() {
+      sectionCommissions.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    btnCommissions.addEventListener('click', scrollToCommissions);
+    btnSayHello.addEventListener('click', scrollToCommissions);
+    btnPhone.addEventListener('click', scrollToCommissions);
 
     // ---- Form ----
     const form = document.getElementById('commission-form');
