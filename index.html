@@ -641,6 +641,26 @@
     .section-works-inner {
       max-width: 1400px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .works-deco {
+      position: absolute;
+      font-family: var(--font-display);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .works-deco-1 { top: 64px; left: 4%; font-size: 3rem; color: var(--cyan); opacity: 0.18; }
+    .works-deco-2 { top: 42%; right: 6%; font-size: 2.2rem; color: var(--hot-pink); opacity: 0.16; }
+    .works-deco-3 { bottom: 12%; left: 7%; font-size: 2rem; color: var(--pink); opacity: 0.14; }
+    .works-deco-4 { top: 16%; right: 22%; font-size: 1.6rem; color: var(--cyan-light); opacity: 0.16; }
+    .works-deco-5 { bottom: 6%; right: 12%; font-size: 1.8rem; color: var(--cyan); opacity: 0.14; }
+
+    @media (max-width: 768px) {
+      .works-deco-2, .works-deco-4 { display: none; }
     }
 
     .section-works h2 {
@@ -689,20 +709,48 @@
       border-color: var(--white);
     }
 
+    .filter-btn-nsfw {
+      background: var(--dark);
+      color: var(--white);
+      border-color: var(--hot-pink);
+      box-shadow: 4px 4px 0 var(--hot-pink);
+    }
+
+    .filter-btn-nsfw:hover {
+      box-shadow: 6px 6px 0 var(--hot-pink);
+    }
+
+    .filter-btn-nsfw.active {
+      background: var(--hot-pink);
+      border-color: var(--white);
+      box-shadow: 4px 4px 0 var(--dark);
+    }
+
+    /* Masonry / corkboard: columns instead of a rigid grid so pieces keep their natural proportions */
     .works-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
+      columns: 3 320px;
+      column-gap: 30px;
       min-height: 400px;
     }
 
     .work-card {
+      display: inline-block;
+      width: 100%;
+      break-inside: avoid;
+      margin-bottom: 30px;
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     .work-card.hidden {
       display: none;
     }
+
+    /* Scrapbook tilt: a handful of alternating angles so cards feel scattered/stuck on, not aligned */
+    .work-card:nth-child(5n+1) { --tilt: -2.5deg; }
+    .work-card:nth-child(5n+2) { --tilt: 1.8deg; }
+    .work-card:nth-child(5n+3) { --tilt: -1.6deg; }
+    .work-card:nth-child(5n+4) { --tilt: 2.4deg; }
+    .work-card:nth-child(5n+5) { --tilt: -3deg; }
 
     .work-card-inner {
       position: relative;
@@ -712,19 +760,49 @@
       border-radius: 12px;
       box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
       cursor: pointer;
-      overflow: hidden;
+      transform: rotate(var(--tilt, 0deg));
       transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), box-shadow 0.3s cubic-bezier(.4, 0, .2, 1), border-color 0.3s;
     }
 
+    /* Washi-tape sticker poking out the top of each card */
+    .work-card-inner::before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      width: 68px;
+      height: 24px;
+      transform: translateX(-50%) rotate(-4deg);
+      background: rgba(255, 182, 217, 0.85);
+      border: 2px solid var(--dark);
+      box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+      z-index: 2;
+      transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .work-card:nth-child(even) .work-card-inner::before {
+      background: rgba(178, 255, 254, 0.85);
+      transform: translateX(-50%) rotate(4deg);
+    }
+
     .work-card-inner:hover {
-      transform: translateY(-8px) scale(1.02);
+      transform: rotate(0deg) translateY(-10px) scale(1.03);
       box-shadow: 12px 12px 0 var(--hot-pink);
       border-color: var(--cyan);
     }
 
+    .work-card-inner:hover::before {
+      transform: translateX(-50%) rotate(-9deg) translateY(-3px);
+    }
+
+    .work-card:nth-child(even) .work-card-inner:hover::before {
+      transform: translateX(-50%) rotate(9deg) translateY(-3px);
+    }
+
     .work-card-inner img {
       width: 100%;
-      height: 340px;
+      height: auto;
+      max-height: 480px;
       object-fit: cover;
       border-radius: 6px;
       border: 2px solid var(--dark);
@@ -755,6 +833,16 @@
       opacity: 1;
     }
 
+    /* Touch/no-hover: caption siempre visible, sin depender de hover */
+    @media (hover: none), (pointer: coarse) {
+      .work-overlay {
+        transform: translateY(0);
+        opacity: 1;
+        padding: 10px 12px;
+        background: rgba(26, 26, 26, 0.85);
+      }
+    }
+
     .work-title {
       font-family: var(--font-display);
       font-weight: 800;
@@ -771,6 +859,19 @@
       margin-top: 4px;
       text-transform: uppercase;
       font-weight: 700;
+    }
+
+    /* NSFW placeholder cards: stand-in art tiles until real pieces are added */
+    .nsfw-placeholder-art {
+      width: 100%;
+      height: 260px;
+      border-radius: 6px;
+      border: 2px dashed var(--hot-pink);
+      background: repeating-linear-gradient(135deg, #2a2a2a, #2a2a2a 12px, #1a1a1a 12px, #1a1a1a 24px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
     }
 
     @media (max-width: 768px) {
@@ -793,12 +894,36 @@
       }
 
       .works-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
+        columns: 1;
+        column-gap: 20px;
+      }
+
+      .work-card {
+        margin-bottom: 24px;
       }
 
       .work-card-inner img {
-        height: 280px;
+        max-height: 340px;
+      }
+
+      .work-card-inner::before {
+        top: -10px;
+        width: 54px;
+        height: 18px;
+      }
+
+      .works-deco {
+        font-size: 1.4rem !important;
+      }
+
+      .nsfw-placeholder-art {
+        height: 200px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .works-grid {
+        columns: 2 260px;
       }
     }
 
@@ -812,7 +937,7 @@
     }
 
     .section-commissions-inner {
-      max-width: 700px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 40px 40px 80px;
     }
@@ -832,6 +957,105 @@
       font-size: 0.95rem;
       opacity: 0.7;
       margin-bottom: 32px;
+    }
+
+    .commissions-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .commissions-pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pricing-heading {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .price-card {
+      background: var(--white);
+      border: var(--border-w) solid var(--dark);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: 4px 4px 0 var(--hot-pink);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .price-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 6px 6px 0 var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    .price-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .price-tier-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price-tier-amount {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--hot-pink);
+      white-space: nowrap;
+    }
+
+    .price-tier-desc {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+
+    .price-addons {
+      list-style: none;
+      background: var(--white);
+      border: var(--border-w) solid var(--dark);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      box-shadow: 4px 4px 0 var(--dark);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .price-addons li {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .price-addons li span:last-child {
+      color: var(--hot-pink);
+      font-weight: 700;
+    }
+
+    .pricing-footnote {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      opacity: 0.65;
+      line-height: 1.4;
     }
 
     .commission-form {
@@ -855,7 +1079,8 @@
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
       font-family: var(--font-body);
       font-size: 1rem;
       padding: 14px 16px;
@@ -869,9 +1094,20 @@
     }
 
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       box-shadow: 5px 5px 0 var(--hot-pink);
       transform: translate(-1px, -1px);
+    }
+
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
+      padding-right: 44px;
     }
 
     .form-group textarea {
@@ -881,6 +1117,17 @@
     .form-submit {
       align-self: flex-end;
       margin-top: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .section-commissions-inner {
+        padding: 30px 20px 60px;
+      }
+
+      .commissions-columns {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
     }
 
     /* ====================== MODAL (WHO AM I?) ====================== */
@@ -998,6 +1245,48 @@
 
     .modal-card .tag:nth-child(even) {
       background: var(--pink);
+    }
+
+    /* ====================== NSFW GATE MODAL ====================== */
+    .modal-card-nsfw {
+      overflow: hidden;
+      padding-top: 24px;
+    }
+
+    .nsfw-stripe-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 14px;
+      background: repeating-linear-gradient(-45deg, var(--dark), var(--dark) 14px, #ffde59 14px, #ffde59 28px);
+    }
+
+    .nsfw-badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--white);
+      background: var(--hot-pink);
+      border: 2px solid var(--dark);
+      border-radius: 30px;
+      padding: 6px 16px;
+      transform: rotate(-3deg);
+      box-shadow: 3px 3px 0 var(--dark);
+      margin-bottom: 14px;
+    }
+
+    .modal-card-nsfw h2 {
+      margin-bottom: 12px;
+    }
+
+    .nsfw-modal-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: flex-end;
+      margin-top: 24px;
+      flex-wrap: wrap;
     }
 
     /* ====================== RESPONSIVE — LARGE SCREENS ====================== */
@@ -1488,6 +1777,11 @@
 
   <!-- ======================== WORKS SECTION ======================== -->
   <section class="section-works" id="section-works">
+    <span class="works-deco works-deco-1 float-1" aria-hidden="true">✦</span>
+    <span class="works-deco works-deco-2 float-3" aria-hidden="true">✧</span>
+    <span class="works-deco works-deco-3 float-2" aria-hidden="true">♥</span>
+    <span class="works-deco works-deco-4 float-4" aria-hidden="true">✦</span>
+    <span class="works-deco works-deco-5 float-2" aria-hidden="true">✧</span>
     <div class="section-works-inner">
       <h2>✦ Selected Works</h2>
       <div class="works-filters" id="works-filters">
@@ -1496,14 +1790,15 @@
         <button class="filter-btn" data-filter="portrait">Portrait</button>
         <button class="filter-btn" data-filter="overlay">Overlays & Emotes</button>
         <button class="filter-btn" data-filter="banner">Banners</button>
+        <button class="filter-btn filter-btn-nsfw" data-filter="nsfw">NSFW 🔞</button>
       </div>
 
       <div class="works-grid" id="works-grid">
         <div class="work-card" data-category="character">
           <div class="work-card-inner">
-            <img src="assets/gallery1.png" alt="Tatsumaki">
+            <img src="assets/works/char-bunny.jpg" alt="Bunny Suit">
             <div class="work-overlay">
-              <span class="work-title">Tatsumaki</span>
+              <span class="work-title">Bunny Suit</span>
               <span class="work-cat">Character</span>
             </div>
           </div>
@@ -1511,9 +1806,39 @@
 
         <div class="work-card" data-category="character">
           <div class="work-card-inner">
-            <img src="assets/gallery2.png" alt="Neon Panther">
+            <img src="assets/works/char-cat-furry.jpg" alt="Purple Cat">
             <div class="work-overlay">
-              <span class="work-title">Neon Panther</span>
+              <span class="work-title">Purple Cat</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/works/char-duck.jpg" alt="Let's Party">
+            <div class="work-overlay">
+              <span class="work-title">Let's Party</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/works/char-zoro-robin.jpg" alt="Zoro &amp; Robin Fanart">
+            <div class="work-overlay">
+              <span class="work-title">Fanart Duo</span>
+              <span class="work-cat">Character</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="character">
+          <div class="work-card-inner">
+            <img src="assets/works/char-fox-rose.jpg" alt="Fox Girl in a Rose">
+            <div class="work-overlay">
+              <span class="work-title">Rose Fox</span>
               <span class="work-cat">Character</span>
             </div>
           </div>
@@ -1521,39 +1846,49 @@
 
         <div class="work-card" data-category="portrait">
           <div class="work-card-inner">
-            <img src="assets/gallery3.png" alt="Autumn Views">
+            <img src="assets/works/portrait-headphones.jpg" alt="Headphones Portrait">
             <div class="work-overlay">
-              <span class="work-title">Autumn Views</span>
+              <span class="work-title">Static Static</span>
               <span class="work-cat">Portrait</span>
             </div>
           </div>
         </div>
 
-        <div class="work-card" data-category="character">
+        <div class="work-card" data-category="portrait">
           <div class="work-card-inner">
-            <img src="assets/gallery4.png" alt="Rena Bunny">
+            <img src="assets/works/portrait-beanie.jpg" alt="Beanie Portrait">
             <div class="work-overlay">
-              <span class="work-title">Rena Bunny</span>
-              <span class="work-cat">Character</span>
+              <span class="work-title">Thinking Out Loud</span>
+              <span class="work-cat">Portrait</span>
             </div>
           </div>
         </div>
 
-        <div class="work-card" data-category="character">
+        <div class="work-card" data-category="portrait">
           <div class="work-card-inner">
-            <img src="assets/gallery5.png" alt="VGEN Challenge">
+            <img src="assets/works/portrait-ink-sketch.jpg" alt="Ink Sketch Portrait">
             <div class="work-overlay">
-              <span class="work-title">VGEN Challenge</span>
-              <span class="work-cat">Character</span>
+              <span class="work-title">Cold Snap</span>
+              <span class="work-cat">Portrait</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="portrait">
+          <div class="work-card-inner">
+            <img src="assets/works/portrait-cap-sketch.jpg" alt="Cap Sketch Portrait">
+            <div class="work-overlay">
+              <span class="work-title">Side Eye</span>
+              <span class="work-cat">Portrait</span>
             </div>
           </div>
         </div>
 
         <div class="work-card" data-category="banner">
           <div class="work-card-inner">
-            <img src="assets/BANNER1.png" alt="Stream Banner">
+            <img src="assets/works/banner-renu-sub.jpg" alt="Renu.sub Banner">
             <div class="work-overlay">
-              <span class="work-title">Profile Banner</span>
+              <span class="work-title">Vein Banner</span>
               <span class="work-cat">Banner</span>
             </div>
           </div>
@@ -1561,9 +1896,39 @@
 
         <div class="work-card" data-category="overlay">
           <div class="work-card-inner">
-            <img src="assets/EMOTES1preview.png" data-full="assets/EMOTES1.png" alt="Twitch Emotes">
+            <img src="assets/works/overlay-stream-layout.jpg" alt="Stream Layout Overlay">
             <div class="work-overlay">
-              <span class="work-title">Custom Emotes</span>
+              <span class="work-title">Graffiti Layout</span>
+              <span class="work-cat">Overlay</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/works/overlay-starting-soon.jpg" alt="Starting Soon Screen">
+            <div class="work-overlay">
+              <span class="work-title">Starting Soon</span>
+              <span class="work-cat">Overlay</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/works/overlay-alert-layout.jpg" alt="Alert Layout Overlay">
+            <div class="work-overlay">
+              <span class="work-title">Strawberry Alerts</span>
+              <span class="work-cat">Overlay</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/works/overlay-emote-sheet.jpg" alt="Chibi Emote Sheet">
+            <div class="work-overlay">
+              <span class="work-title">Chibi Emote Sheet</span>
               <span class="work-cat">Emotes</span>
             </div>
           </div>
@@ -1571,10 +1936,50 @@
 
         <div class="work-card" data-category="overlay">
           <div class="work-card-inner">
-            <img src="assets/OVERLAY1.png" alt="Stream Overlay">
+            <img src="assets/works/overlay-chibi-pfp.jpg" alt="Chibi Cat Ears PFP">
             <div class="work-overlay">
-              <span class="work-title">Stream Overlay</span>
-              <span class="work-cat">Overlay</span>
+              <span class="work-title">Chibi PFP</span>
+              <span class="work-cat">Emotes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="overlay">
+          <div class="work-card-inner">
+            <img src="assets/works/overlay-chibi-angel.jpg" alt="Chibi Angel PFP">
+            <div class="work-overlay">
+              <span class="work-title">Chibi Angel</span>
+              <span class="work-cat">Emotes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="nsfw">
+          <div class="work-card-inner nsfw-placeholder-card">
+            <div class="nsfw-placeholder-art">🔒</div>
+            <div class="work-overlay">
+              <span class="work-title">Próximamente</span>
+              <span class="work-cat">NSFW</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="nsfw">
+          <div class="work-card-inner nsfw-placeholder-card">
+            <div class="nsfw-placeholder-art">🔞</div>
+            <div class="work-overlay">
+              <span class="work-title">Próximamente</span>
+              <span class="work-cat">NSFW</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card" data-category="nsfw">
+          <div class="work-card-inner nsfw-placeholder-card">
+            <div class="nsfw-placeholder-art">✦</div>
+            <div class="work-overlay">
+              <span class="work-title">Próximamente</span>
+              <span class="work-cat">NSFW</span>
             </div>
           </div>
         </div>
@@ -1582,29 +1987,94 @@
     </div>
   </section>
 
+  <!-- ======================== NSFW GATE MODAL ======================== -->
+  <div class="modal-overlay" id="modal-nsfw" role="dialog" aria-modal="true" aria-labelledby="nsfw-modal-title">
+    <div class="modal-card modal-card-nsfw">
+      <button class="modal-close" id="nsfw-modal-close">✕</button>
+      <div class="nsfw-stripe-bar"></div>
+      <span class="nsfw-badge">🔞 +18</span>
+      <h2 id="nsfw-modal-title">¡Alto ahí!</h2>
+      <p>Esta sección tiene arte <strong>NSFW</strong> — desnudos parciales, contenido sugerente y furry para adultes.
+        Si sos menor de 18 años, o este tipo de contenido no es lo tuyo, mejor no sigas de largo.</p>
+      <div class="nsfw-modal-actions">
+        <button class="sticker-btn btn-white" id="nsfw-decline">No, volver ✕</button>
+        <button class="sticker-btn btn-dark" id="nsfw-confirm">Sí, soy +18 ✦</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ======================== COMMISSIONS FORM ======================== -->
   <section class="section-commissions" id="section-commissions">
     <div class="section-commissions-inner">
       <h2>✦ Commissions</h2>
       <p class="subtitle">Fill out the form below and I'll get back to you ASAP!</p>
-      <form class="commission-form" id="commission-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-group">
-          <label for="field-name">Your Name</label>
-          <input type="text" id="field-name" name="name" placeholder="e.g. Sakura" required>
+
+      <div class="commissions-columns">
+        <div class="commissions-pricing">
+          <h3 class="pricing-heading">✦ Price Sheet</h3>
+
+          <div class="price-card">
+            <div class="price-card-top">
+              <span class="price-tier-name">Headshot / Bust</span>
+              <span class="price-tier-amount">from $5</span>
+            </div>
+            <p class="price-tier-desc">Portrait crop, shoulders up, clean background.</p>
+          </div>
+
+          <div class="price-card">
+            <div class="price-card-top">
+              <span class="price-tier-name">Half Body</span>
+              <span class="price-tier-amount">from $10</span>
+            </div>
+            <p class="price-tier-desc">Waist-up, includes basic pose &amp; simple background.</p>
+          </div>
+
+          <div class="price-card">
+            <div class="price-card-top">
+              <span class="price-tier-name">Full Body</span>
+              <span class="price-tier-amount">from $15</span>
+            </div>
+            <p class="price-tier-desc">Full character, custom pose, detailed background available.</p>
+          </div>
+
+          <ul class="price-addons">
+            <li><span>+ Extra Character</span><span>$10</span></li>
+            <li><span>+ Detailed Background</span><span>$20</span></li>
+            <li><span>+ NSFW / Furry</span><span>$0</span></li>
+          </ul>
+
+          <p class="pricing-footnote">✦ Final price depends on complexity — I'll confirm the exact quote after chatting about your commission. Rush orders may incur an additional fee.</p>
         </div>
-        <div class="form-group">
-          <label for="field-email">Email</label>
-          <input type="email" id="field-email" name="email" placeholder="you@email.com" required>
-        </div>
-        <div class="form-group">
-          <label for="field-description">Describe your commission</label>
-          <textarea id="field-description" name="message"
-            placeholder="Tell me about your character, style preference, budget, deadline..." required></textarea>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="sticker-btn btn-cyan">Send Request ✦</button>
-        </div>
-      </form>
+
+        <form class="commission-form" id="commission-form" action="https://formspree.io/f/mpqgvgaq" method="POST">
+          <div class="form-group">
+            <label for="field-name">Your Name</label>
+            <input type="text" id="field-name" name="name" placeholder="e.g. Sakura" required>
+          </div>
+          <div class="form-group">
+            <label for="field-email">Email</label>
+            <input type="email" id="field-email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="field-commission-type">Commission Type</label>
+            <select id="field-commission-type" name="commission_type" required>
+              <option value="" disabled selected>Select a tier...</option>
+              <option value="Headshot / Bust">Headshot / Bust — from $5</option>
+              <option value="Half Body">Half Body — from $10</option>
+              <option value="Full Body">Full Body — from $15</option>
+              <option value="Other / Not Sure">Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="field-description">Describe your commission</label>
+            <textarea id="field-description" name="message"
+              placeholder="Tell me about your character, style preference, budget, deadline..." required></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="sticker-btn btn-cyan">Send Request ✦</button>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -1661,30 +2131,67 @@
       sectionWorks.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
+    function applyFilter(filterValue) {
+      workCards.forEach(card => {
+        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+          card.classList.remove('hidden');
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            if (card.style.opacity === '0') {
+              card.classList.add('hidden');
+            }
+          }, 300);
+        }
+      });
+    }
+
+    // ---- NSFW GATE ----
+    const modalNsfw = document.getElementById('modal-nsfw');
+    const nsfwConfirmBtn = document.getElementById('nsfw-confirm');
+    const nsfwDeclineBtn = document.getElementById('nsfw-decline');
+    const nsfwModalCloseBtn = document.getElementById('nsfw-modal-close');
+    const nsfwFilterBtn = document.querySelector('.filter-btn[data-filter="nsfw"]');
+
+    function openNsfwModal() {
+      modalNsfw.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeNsfwModal() {
+      modalNsfw.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    nsfwDeclineBtn.addEventListener('click', closeNsfwModal);
+    nsfwModalCloseBtn.addEventListener('click', closeNsfwModal);
+    modalNsfw.addEventListener('click', (e) => { if (e.target === modalNsfw) closeNsfwModal(); });
+
+    nsfwConfirmBtn.addEventListener('click', () => {
+      closeNsfwModal();
+      filterBtns.forEach(b => b.classList.remove('active'));
+      nsfwFilterBtn.classList.add('active');
+      applyFilter('nsfw');
+    });
+
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
         const filterValue = btn.getAttribute('data-filter');
 
-        workCards.forEach(card => {
-          if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-            card.classList.remove('hidden');
-            setTimeout(() => {
-              card.style.opacity = '1';
-              card.style.transform = 'scale(1)';
-            }, 10);
-          } else {
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.8)';
-            setTimeout(() => {
-              if (card.style.opacity === '0') {
-                card.classList.add('hidden');
-              }
-            }, 300);
-          }
-        });
+        // NSFW always gates behind the warning modal first — never filters directly on click
+        if (filterValue === 'nsfw') {
+          openNsfwModal();
+          return;
+        }
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(filterValue);
       });
     });
 
@@ -1697,6 +2204,8 @@
     workCards.forEach(card => {
       card.addEventListener('click', () => {
         const img = card.querySelector('img');
+        if (!img) return; // NSFW placeholder cards have no artwork yet
+
         const fullSource = img.getAttribute('data-full') || img.src;
 
         spotlightArtwork.src = fullSource;
@@ -1735,6 +2244,7 @@
       if (e.key === 'Escape') {
         closeSpotlight();
         closeModal();
+        closeNsfwModal();
       }
     });
 
